@@ -1,0 +1,65 @@
+<html>
+    <head>
+        <style>
+            html{
+                background-color: ;
+            }
+        </style>
+    </head>
+    <body>
+        <canvas id="C" width="150" height="150" style="border: 10px dotted white">3</canvas>
+        <script>
+            var c = document.getElementById("C");
+            var ctx = c.getContext("2d");
+            var centx = c.width / 2;
+            var centy = c.height / 2;
+            var r = 70;
+            var er = 10;
+            var eyeOffsetx = 25;
+            var eyeOffsety = 20;
+            var isSmile = true;
+
+            function drawFace() {
+                // Clear the canvas
+                ctx.clearRect(0, 0, c.width, c.height);
+
+                // Draw yellow circle
+                ctx.beginPath();
+                ctx.arc(centx, centy, r, 0, 2*Math.PI, false);
+                ctx.fillStyle = "yellow";
+                ctx.fill();
+                ctx.lineWidth = 5;
+                ctx.strokeStyle = "black";
+                ctx.stroke();
+
+                // Draw eyes
+                ctx.beginPath();
+                var eyex = centx - eyeOffsetx;
+                var eyey = centy - eyeOffsety;
+                ctx.arc(eyex, eyey, er, 0, 2*Math.PI, false);
+                eyex = centx + eyeOffsetx;
+                ctx.arc(eyex, eyey, er, 0, 2*Math.PI, false);
+                ctx.fillStyle = "black";
+                ctx.fill();
+
+                // Draw mouth
+                ctx.beginPath();
+                if (isSmile) {
+                    ctx.arc(centx, centy + 10, 50, 0, Math.PI, false);
+                } else {
+                    ctx.arc(centx, centy + 45, 50, Math.PI, 0, false);
+                }
+                ctx.stroke();
+            }
+
+            // Call the drawFace function initially
+            drawFace();
+
+            // Toggle the smile/frown state every 2 seconds
+            setInterval(function() {
+                isSmile = !isSmile;
+                drawFace();
+            }, 2000);
+        </script>
+    </body>
+</html>
